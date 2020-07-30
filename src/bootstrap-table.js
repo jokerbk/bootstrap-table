@@ -553,6 +553,10 @@ class BootstrapTable {
       opts.icons = Utils.calculateObjectValue(null, opts.icons)
     }
 
+    if (typeof opts.buttonsOrder === 'string') {
+      opts.buttonsOrder = opts.buttonsOrder.replace(/\[|\]| |'/g, '').toLowerCase().split(',')
+    }
+
     this.buttons = Object.assign(this.buttons, {
       paginationSwitch: {
         'text': opts.formatPaginationSwitchUp(),
@@ -660,6 +664,7 @@ class BootstrapTable {
 
     const buttonsHtml = {}
     for (const [buttonName, buttonConfig] of Object.entries(this.buttons)) {
+      const buttonNameLowerCase = buttonName.toLowerCase()
       let buttonHtml
       if (buttonConfig.hasOwnProperty('html')) {
         buttonHtml = Utils.calculateObjectValue(this.options, buttonConfig.html)
@@ -687,17 +692,17 @@ class BootstrapTable {
         buttonHtml += '</button>'
       }
 
-      buttonsHtml[buttonName.toLowerCase()] = buttonHtml
+      buttonsHtml[buttonNameLowerCase] = buttonHtml
       if (
         !buttonConfig.hasOwnProperty('enabled')
         || buttonConfig.hasOwnProperty('enabled') && buttonConfig.enabled
       ) {
-        opts['show' + buttonName.charAt(0).toUpperCase() + buttonName.substring(1).toLowerCase()] = true
+        opts['show' + buttonName.charAt(0).toUpperCase() + buttonNameLowerCase.substring(1)] = true
       }
-    }
 
-    if (typeof opts.buttonsOrder === 'string') {
-      opts.buttonsOrder = opts.buttonsOrder.replace(/\[|\]| |'/g, '').toLowerCase().split(',')
+      if (!opts.buttonsOrder.includes(buttonNameLowerCase)) {
+        opts.buttonsOrder.push(buttonNameLowerCase)
+      }
     }
 
     for (const button of opts.buttonsOrder) {
