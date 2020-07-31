@@ -599,6 +599,7 @@ class BootstrapTable {
         }
       },
       columns: {
+        'enabled': false,
         'html': (() => {
           const html = []
           html.push(`<div class="keep-open ${this.constants.classes.buttonsDropdown}" title="${opts.formatColumns()}">
