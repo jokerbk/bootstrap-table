@@ -720,10 +720,20 @@ class BootstrapTable {
 
     for (const [buttonName, buttonConfig] of Object.entries(this.buttons)) {
       if (buttonConfig.hasOwnProperty('event')) {
-        const event = typeof buttonConfig.event === 'string' ? window[buttonConfig.event] : buttonConfig.event
-        this.$toolbar.find(`button[name="${buttonName}"]`)
-          .off('click')
-          .on('click', () => event.call(this))
+        if (typeof buttonConfig.event === 'function' || typeof buttonConfig.event === 'string') {
+          const event = typeof buttonConfig.event === 'string' ? window[buttonConfig.event] : buttonConfig.event
+          this.$toolbar.find(`button[name="${buttonName}"]`)
+            .off('click')
+            .on('click', () => event.call(this))
+          continue
+        }
+
+        for (const [eventType, eventFunction] of Object.entries(buttonConfig.event)) {
+          const event = typeof eventFunction === 'string' ? window[eventFunction] : eventFunction
+          this.$toolbar.find(`button[name="${buttonName}"]`)
+            .off(eventType)
+            .on(eventType, () => event.call(this))
+        }
       }
     }
 
