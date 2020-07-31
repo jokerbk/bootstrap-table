@@ -84,4 +84,4 @@ This extension adds functionality for copying selected rows to the clipboard. Cu
 
 - **type:** `Function`
 
-- **Default:** `function () { return "Copy Rows";}`
+- **Default:** `function () { return "Copy Rows" }`

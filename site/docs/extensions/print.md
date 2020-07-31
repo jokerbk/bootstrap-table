@@ -128,4 +128,4 @@ Adds a button to the toolbar for printing the table in a predefined configurable
 
 - **type:** `Function`
 
-- **Default:** `function () { return "Print";}`
+- **Default:** `function () { return "Print" }`
