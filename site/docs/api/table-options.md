@@ -73,8 +73,8 @@ The table options are defined in `jQuery.fn.bootstrapTable.defaults`.
   - `icon`
     - Description: This option is used for the [showButtonIcons](https://bootstrap-table.com/docs/api/table-options/#showbuttonicons) table option.
     - Type: `String` - Only needs the icon class e.g. `fa-users`
-  - `enabled`
-    - Description: Set this option to `false` to hide the button by default, the button is visible again when you add the data attribute `data-show-BUTTONNAME="true"`.   
+  - `render`
+    - Description: Set this option to `false` to hide the button by default, the button is visible again when you add the data attribute `data-show-BUTTONNAME="true"`.    
   - `attributes`
     - Description: This option allows adding additional html attributes e.g. `title`
     - Type: `Object`

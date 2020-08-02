@@ -697,8 +697,8 @@ class BootstrapTable {
       const showOption = opts['show' + buttonName.charAt(0).toUpperCase() + buttonNameLowerCase.substring(1)]
       if (
         (
-          !buttonConfig.hasOwnProperty('enabled')
-        || buttonConfig.hasOwnProperty('enabled') && buttonConfig.enabled
+          !buttonConfig.hasOwnProperty('render')
+        || buttonConfig.hasOwnProperty('render') && buttonConfig.render
         ) && (showOption === undefined || showOption === true)
       ) {
         opts['show' + buttonName.charAt(0).toUpperCase() + buttonNameLowerCase.substring(1)] = true
