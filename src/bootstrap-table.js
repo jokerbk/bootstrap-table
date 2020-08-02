@@ -694,9 +694,12 @@ class BootstrapTable {
       }
 
       buttonsHtml[buttonNameLowerCase] = buttonHtml
+      const showOption = opts['show' + buttonName.charAt(0).toUpperCase() + buttonNameLowerCase.substring(1)]
       if (
-        !buttonConfig.hasOwnProperty('enabled')
+        (
+          !buttonConfig.hasOwnProperty('enabled')
         || buttonConfig.hasOwnProperty('enabled') && buttonConfig.enabled
+        ) && (showOption === undefined || showOption === true)
       ) {
         opts['show' + buttonName.charAt(0).toUpperCase() + buttonNameLowerCase.substring(1)] = true
       }
@@ -707,7 +710,8 @@ class BootstrapTable {
     }
 
     for (const button of opts.buttonsOrder) {
-      if (opts['show' + button.charAt(0).toUpperCase() + button.substring(1)]) {
+      const showOption = opts['show' + button.charAt(0).toUpperCase() + button.substring(1)]
+      if (showOption !== undefined && showOption === true) {
         html.push(buttonsHtml[button])
       }
     }
