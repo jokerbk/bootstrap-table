@@ -54,7 +54,8 @@ class API {
           if (this.ignore && this.ignore[key] && this.ignore[key].includes(name)) {
             continue
           }
-
+          console.log(details[i])
+          console.log(details[i + 1])
           const tmpDetails = details[i + 1].trim()
           if (name === 'Example' && exampleFilesFound) {
             const matches = exampleRegex.exec(tmpDetails)
