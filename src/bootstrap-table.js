@@ -693,7 +693,7 @@ class BootstrapTable {
       buttonsHtml[buttonName] = buttonHtml
       const optionName = `show${buttonName.charAt(0).toUpperCase()}${buttonName.substring(1)}`
       const showOption = this.options[optionName]
-      if ((!buttonConfig.hasOwnProperty('render') || buttonConfig.hasOwnProperty('render') && buttonConfig.render) && showOption) {
+      if ((!buttonConfig.hasOwnProperty('render') || buttonConfig.hasOwnProperty('render') && buttonConfig.render) && (showOption === undefined || showOption === true)) {
         this.options[optionName] = true
       }
 
