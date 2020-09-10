@@ -52,7 +52,6 @@ class API {
 
           for (let i = 0; i < this.attributes.length; i++) {
             const name = this.attributes[i]
-            console.log(`${key}: ${name}`)
             if (this.ignore && this.ignore[key] && this.ignore[key].includes(name)) {
               continue
             }
