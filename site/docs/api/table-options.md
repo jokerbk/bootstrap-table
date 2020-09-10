@@ -64,7 +64,7 @@ The table options are defined in `jQuery.fn.bootstrapTable.defaults`.
 - **Detail:**
 
   This option allows creating/adding custom button(s) to "buttonbar" (top right of the table).  
-  This buttons can be sorted with the table option [buttonsOrder](https://bootstrap-table.com/docs/api/table-options/#buttonsorder), the used key/name for the event should be used for that!
+  This buttons can be sorted with the table option [buttonsOrder](https://bootstrap-table.com/docs/api/table-options/#buttonsorder), the used key/name for the event should be used for that.
   
 - **Default:** `{}`
 
