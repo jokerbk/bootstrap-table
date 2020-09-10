@@ -694,14 +694,15 @@ class BootstrapTable {
       }
 
       buttonsHtml[buttonNameLowerCase] = buttonHtml
-      const showOption = opts['show' + buttonName.charAt(0).toUpperCase() + buttonNameLowerCase.substring(1)]
+      const optionName = `show${buttonName.charAt(0).toUpperCase()}${buttonName.substring(1)}`
+      const showOption = opts[optionName]
       if (
         (
           !buttonConfig.hasOwnProperty('render')
         || buttonConfig.hasOwnProperty('render') && buttonConfig.render
         ) && (showOption === undefined || showOption === true)
       ) {
-        opts['show' + buttonName.charAt(0).toUpperCase() + buttonNameLowerCase.substring(1)] = true
+        opts[optionName] = true
       }
 
       if (!opts.buttonsOrder.includes(buttonNameLowerCase)) {
