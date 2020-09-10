@@ -57,9 +57,9 @@ The table options are defined in `jQuery.fn.bootstrapTable.defaults`.
 
 ## buttons
 
-- **Attribute:** `data-ajax-options`
+- **Attribute:** `data-buttons`
 
-- **Type:** `Object`
+- **Type:** `Function`
 
 - **Detail:**
 
@@ -67,7 +67,7 @@ The table options are defined in `jQuery.fn.bootstrapTable.defaults`.
 
 - **Default:** `{}`
 
-- **Example:** [AJAX Options](https://examples.bootstrap-table.com/#options/ajax-options.html)
+- **Example:** [Buttons](https://examples.bootstrap-table.com/#options/buttons.html)
 
 ## buttonsAlign
 
