@@ -141,6 +141,7 @@ class BootstrapTable {
     }
 
     this._headerTrClasses = []
+    this._headerTrStyles = []
     this.$header.find('tr').each((i, el) => {
       const $tr = $(el)
       const column = []
@@ -164,6 +165,9 @@ class BootstrapTable {
 
       if ($tr.attr('class')) {
         this._headerTrClasses.push($tr.attr('class'))
+      }
+      if ($tr.attr('style')) {
+        this._headerTrStyles.push($tr.attr('style'))
       }
     })
 
@@ -234,7 +238,7 @@ class BootstrapTable {
     Utils.updateFieldGroup(this.options.columns)
 
     this.options.columns.forEach((columns, i) => {
-      html.push(`<tr${Utils.sprintf(' class="%s"', this._headerTrClasses[i])}>`)
+      html.push(`<tr${Utils.sprintf(' class="%s"', this._headerTrClasses[i])} ${Utils.sprintf(' style="%s"', this._headerTrStyles[i])}>`)
 
       let detailViewTemplate = ''
 
@@ -1395,6 +1399,7 @@ class BootstrapTable {
       Utils.sprintf(' %s', htmlAttributes.length ? htmlAttributes.join(' ') : undefined),
       Utils.sprintf(' id="%s"', Array.isArray(item) ? undefined : item._id),
       Utils.sprintf(' class="%s"', style.classes || (Array.isArray(item) ? undefined : item._class)),
+      Utils.sprintf(' style="%s"', Array.isArray(item) ? undefined : item._style),
       ` data-index="${i}"`,
       Utils.sprintf(' data-uniqueid="%s"', Utils.getItemField(item, this.options.uniqueId, false)),
       Utils.sprintf(' data-has-detail-view="%s"', (this.options.detailView && Utils.calculateObjectValue(null, this.options.detailFilter, [i, item])) ? 'true' : undefined),
@@ -1435,6 +1440,7 @@ class BootstrapTable {
       let id_ = ''
       let class_ = this.header.classes[j]
       let style_ = ''
+      let styleToAdd_ = ''
       let data_ = ''
       let rowspan_ = ''
       let colspan_ = ''
@@ -1459,9 +1465,19 @@ class BootstrapTable {
         value_ = Utils.escapeHTML(value_)
       }
 
+      // Style concat
       if (csses.concat([this.header.styles[j]]).length) {
-        style_ = ` style="${csses.concat([this.header.styles[j]]).join('; ')}"`
+        styleToAdd_ += `${csses.concat([this.header.styles[j]]).join('; ')}`
       }
+      if (item[`_${field}_style`]) {
+        styleToAdd_ += `${item[`_${field}_style`]}`
+      }
+
+      if (styleToAdd_) {
+        style_ = ` style="${styleToAdd_}"`
+      }
+      // Style concat
+
       // handle id and class of td
       if (item[`_${field}_id`]) {
         id_ = Utils.sprintf(' id="%s"', item[`_${field}_id`])
