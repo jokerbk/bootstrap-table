@@ -728,9 +728,28 @@ class BootstrapTable {
         })
       }
     }
+    const handleInputEvent = ($searchInput) => {
+      const eventTriggers = 'keyup drop blur mouseup'
+      $searchInput.off(eventTriggers).on(eventTriggers, event => {
+        if (opts.searchOnEnterKey && event.keyCode !== 13) {
+          return
+        }
 
+        if ([37, 38, 39, 40].includes(event.keyCode)) {
+          return
+        }
+
+        clearTimeout(timeoutId) // doesn't matter if it's 0
+        timeoutId = setTimeout(() => {
+          this.onSearch({currentTarget: event.currentTarget})
+        }, opts.searchTimeOut)
+      })
+    }
     // Fix #4516: this.showSearchClearButton is for extensions
-    if (opts.search || this.showSearchClearButton) {
+    if (
+      (opts.search || this.showSearchClearButton)
+      && typeof this.options.searchSelector !== 'string'
+    ) {
       html = []
       const showSearchButton = Utils.sprintf(this.constants.html.searchButton,
         this.constants.buttonsClass,
@@ -764,25 +783,7 @@ class BootstrapTable {
       `, searchInputFinalHtml))
 
       this.$toolbar.append(html.join(''))
-      const $searchInput = this.$toolbar.find('.search input')
-      const handleInputEvent = () => {
-        const eventTriggers = 'keyup drop blur mouseup'
-        $searchInput.off(eventTriggers).on(eventTriggers, event => {
-          if (opts.searchOnEnterKey && event.keyCode !== 13) {
-            return
-          }
-
-          if ([37, 38, 39, 40].includes(event.keyCode)) {
-            return
-          }
-
-          clearTimeout(timeoutId) // doesn't matter if it's 0
-          timeoutId = setTimeout(() => {
-            this.onSearch({currentTarget: event.currentTarget})
-          }, opts.searchTimeOut)
-        })
-      }
-
+      const $searchInput = Utils.getSearchInput(this)
       if (opts.showSearchButton) {
         this.$toolbar.find('.search button[name=search]').off('click').on('click', event => {
           clearTimeout(timeoutId) // doesn't matter if it's 0
@@ -792,10 +793,10 @@ class BootstrapTable {
         })
 
         if (opts.searchOnEnterKey) {
-          handleInputEvent()
+          handleInputEvent($searchInput)
         }
       } else {
-        handleInputEvent()
+        handleInputEvent($searchInput)
       }
 
       if (opts.showSearchClearButton) {
@@ -803,6 +804,9 @@ class BootstrapTable {
           this.resetSearch()
         })
       }
+    } else if (typeof this.options.searchSelector === 'string') {
+      const $searchInput = Utils.getSearchInput(this)
+      handleInputEvent($searchInput)
     }
   }
 
@@ -818,7 +822,7 @@ class BootstrapTable {
         return
       }
 
-      if ($(currentTarget).hasClass('search-input')) {
+      if (currentTarget === Utils.getSearchInput(this)[0] || $(currentTarget).hasClass('search-input')) {
         this.searchText = text
         this.options.searchText = text
       }
@@ -1842,7 +1846,7 @@ class BootstrapTable {
     if (this.options.search) {
       this.searchText = ''
       if (this.options.searchText !== '') {
-        const $search = this.$toolbar.find('.search input')
+        const $search = Utils.getSearchInput(this)
         $search.val(this.options.searchText)
         this.onSearch({currentTarget: $search, firedByInitSearchText: true})
       }
@@ -2895,7 +2899,7 @@ class BootstrapTable {
   }
 
   resetSearch (text) {
-    const $search = this.$toolbar.find('.search input')
+    const $search = Utils.getSearchInput(this)
     $search.val(text || '')
     this.onSearch({currentTarget: $search})
   }
