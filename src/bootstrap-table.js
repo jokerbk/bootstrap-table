@@ -192,6 +192,10 @@ class BootstrapTable {
       })
     })
 
+    if (this.options.data.length === 0) {
+      this.options.data = []
+    }
+
     // if options.data is setting, do not process tbody and tfoot data
     if (!this.options.data.length) {
       const htmlData = Utils.trToData(this.columns, this.$el.find('>tbody>tr'))
