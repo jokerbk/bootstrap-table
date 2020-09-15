@@ -2904,7 +2904,7 @@ class BootstrapTable {
   }
 
   showLoading () {
-    this.$tableLoading.css('display', 'flex')
+    this.$tableLoading.toggleClass('open', true)
 
     let fontSize = this.options.loadingFontSize
 
@@ -2919,7 +2919,7 @@ class BootstrapTable {
   }
 
   hideLoading () {
-    this.$tableLoading.css('display', 'none')
+    this.$tableLoading.toggleClass('open', false)
   }
 
   togglePagination () {
